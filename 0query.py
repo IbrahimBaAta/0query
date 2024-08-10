@@ -26,5 +26,34 @@ class Db:
     - *databse*: the database name (only as keyword argument)
 
         """
+        if dataBase.lower() == "postgresql":
+            if type(requiredData) == dict:
+                self.requiredData = requiredData
+                self.__conn = None
+                try:
+                    self.__conn = psycopg2.connect(
+                        host = self.requiredData['hostname'],
+                        dbname = dbname,
+                        user = self.requiredData['username'],
+                        password = self.requiredData['pwd'],
+                        port = self.requiredData['port_id']
+                    )
+                    self.__cur= self.__conn.cursor()
+                    # remove this just to test the operation
+                    print("$ ** proper connection established ")
+                except Exception as error:
+                    print(error)
+            else:
+                raise TypeError(f"$ invalid type, need to use list(): {requiredData}")
+        else:
+            print("$ thanks for waiting, work is still on..")
 
         return None
+
+    def __str__(self):
+        """
+        returns databse details ...
+        """
+        for i in self.requiredData.items():
+            print(i)
+        return "\n$ *** Db details ***"
