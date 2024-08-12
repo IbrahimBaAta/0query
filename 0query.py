@@ -57,3 +57,22 @@ class Db:
         for i in self.requiredData.items():
             print(i)
         return "\n$ *** Db details ***"
+    
+    def createDatabase(self,database:str):
+        """
+        creates new database
+        *parameters*
+        1. new database name -> str()
+
+
+        """
+        self.__conn.autocommit = True
+        try:
+            __createdatabase = f'''CREATE database {database} '''
+            grantPrivilages = f"GRANT ALL PRIVILEGES ON DATABASE {database} TO {self.requiredData['username']}"
+            self.__cur.execute(__createdatabase)
+            self.__cur.execute(grantPrivilages)
+            print(f"$ {database} Successfully created")
+            return ""
+        except psycopg2.errors.DuplicateDatabase:
+            print(f"$ database already created {database}")
