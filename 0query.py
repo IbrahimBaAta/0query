@@ -76,3 +76,37 @@ class Db:
             return ""
         except psycopg2.errors.DuplicateDatabase:
             print(f"$ database already created {database}")
+
+
+    def createTable(self,tableNAME:str = None,attributes:dict = None):
+        """
+        creates new table
+        *parameters*
+        1.tablename  -> str()
+        2.attributes -> dict()
+
+        ** need to give proper tablename and its attribute ** 
+        demo // CreateDataBase(tablename, {"Column name":"Column Type" })
+        ex-   CreateDataBase("Books",{"sno": "int","book_name":"VARCHAR(50),..." })
+
+
+        """
+
+        if (tableNAME or attributes) == None:
+            print( """ ** need to give proper tablename and its attribute ** 
+ demo // CreateDataBase(tablename, {"Column name":"Column Type" })
+   ex-   CreateDataBase("Books",{"sno": "int","book_name":"VARCHAR(50),..." })""")
+            return "need to give proper tablename and its attributes"
+        self.__attributes = attributes         
+        templineJoiner = ',\n'
+        try:
+            CreateScript = f'''CREATE TABLE IF NOT EXISTS  {tableNAME}(
+                {templineJoiner.join(f"{key} {value} " for key,value in self.__attributes.items())}
+            )'''
+            self.__cur.execute(CreateScript)
+            self.__conn.commit()
+            
+            print(f"$ Attributes created for the table {tableNAME} ")
+        except Exception as error:
+            print("$ ",error,"not found")
+    
