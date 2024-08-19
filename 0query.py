@@ -126,3 +126,18 @@ class Db:
 
     def updateTableData(self):
         pass
+
+    def deleteData(self,tableName:str,conditionStatement:str):
+        """
+        conditional delete
+        base on conditon it will delete data
+        *parameter*
+        1. table name -> str()
+        2. condition (using if ....)
+        """
+        try:
+            self.__cur.execute(f'''DELETE FROM {tableName} {conditionStatement}''')
+            self.__conn.commit()
+            print("row deleted...")
+        except:
+            print("Syntax error")
