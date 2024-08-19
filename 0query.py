@@ -122,4 +122,7 @@ class Db:
             result = self.__cur.fetchall()
 
         # self.__conn.commit()
-        return result    
+        return result   
+
+    def updateTableData(self):
+        pass
