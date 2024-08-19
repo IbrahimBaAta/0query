@@ -109,4 +109,17 @@ class Db:
             print(f"$ Attributes created for the table {tableNAME} ")
         except Exception as error:
             print("$ ",error,"not found")
-    
+
+    def tableData(self,tableNAMe:str,condition = False, conditionStatement=None):
+        """
+        returns table data.
+        """
+        if condition == False:
+            self.__cur.execute(f'''SELECT * from {tableNAMe}''')
+            result = self.__cur.fetchall()
+        elif condition == True:
+            self.__cur.execute(f'''SELECT * from {tableNAMe} {conditionStatement}''')
+            result = self.__cur.fetchall()
+
+        # self.__conn.commit()
+        return result    
