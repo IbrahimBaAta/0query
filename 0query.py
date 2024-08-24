@@ -141,3 +141,25 @@ class Db:
             print("row deleted...")
         except:
             print("Syntax error")
+
+
+    def dropTable(self,tableName:str):
+        """
+        delete/Drop the table
+
+        """
+        try:
+            self.__cur.execute(f"DROP TABLE {tableName}")
+            self.__conn.commit()
+        except:
+            print("table NOt found..")
+
+
+    def closeConnection(self):
+        """
+        close the database connection 
+        """
+        if self.__conn is not None:
+            self.__cur.close()
+            self.__conn.close()
+            print("$ Connection properly Disconnected")
