@@ -154,6 +154,22 @@ class Db:
         except:
             print("table NOt found..")
 
+    def sqlCommand(self,command:str):
+        """
+        any sql query can be execute...
+        *parameter*
+        1. command -> str()
+
+        """
+
+        # need to work on it ..
+        try:
+            self.__cur.execute(f"{command}")
+            self.__conn.commit()
+            return self.__cur.fetchall()
+        except:
+            print("Syntax Error use proper syntax/tablename")
+
 
     def closeConnection(self):
         """
